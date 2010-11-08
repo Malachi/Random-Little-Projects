@@ -1,0 +1,155 @@
+#!/bin/bash
+# Author:  Alwyn Malachi Berkeley Jr.
+# Email:  <malachix@users.sourceforge.net>
+# Date:  09/29/10
+# Description:  This program makes use of a technique called
+# speedpaging; whereby you treat reading like a slideshow.
+# This should turn reading into a game for you and keep you
+# on task rather than getting distracted with other things.
+# Your goal with this program should be to read a book
+# multiple times with shorter and shorter intervals until you
+# OWN all the knowledge that the book has to offer you.
+# License:  GPL v2
+###### Variables used by the program are stored below ######
+
+WIN_ID=-1
+PAGE_COUNT=-1
+DO_CLOSE=0
+IS_VERBOSE=0
+FILE=''
+TITLE=''
+
+SCROLL_MODE='page'
+VIEWER='evince'
+TIMEOUT=5
+. $HOME/.speedpage
+
+###### Functions used by the program are stored below ######
+
+# load a book
+function openBook {
+	exec $VIEWER "$1" &
+	sleep 1
+	TITLE=`pdfinfo "$1" | grep Title | sed -s "s/^Title:[[:space:]]*//"`
+	findBookWindow "$TITLE"
+}
+
+# close a book
+function closeBook {
+	focusWindow
+	keypress 'Alt_L+F4'
+}
+
+# finds a window by matching part of it's title string
+function findBookWindow {
+	WIN_ID=`xdotool search --title "$1" | head -1`
+}
+
+# focus on the last window you found
+function focusWindow {
+	xdotool windowactivate $WIN_ID
+}
+
+# creates a fake key press event
+function keypress {
+	xdotool key "$1"
+}
+
+# turns to the next page in the book
+function turnPageForward {
+	focusWindow
+	keypress 'ctrl+Next'
+}
+
+# finds the page count of a pdf file
+function pageCount {
+	PAGE_COUNT=`pdfinfo /home/malachi/Books/PeekComputerElectronics.pdf | grep -e 'Pages' | sed 's/^[[:alpha:]:[:space:]]*\([[:digit:]]*\)/\1/g'`
+}
+
+# Calculates an estimate for the speedpaging time
+function speedPagingTime {
+	ETC_MIN=`echo "scale=2;( $PAGE_COUNT * $TIMEOUT )/60" | bc`
+	COMPARE=`echo "$ETC_MIN > 60" | bc`
+	if [ $COMPARE -eq 1 ]
+	then
+		ETC_HOURS=`echo "scale=2; $ETC_MIN / 60" | bc`
+		echo "Page Count: $PAGE_COUNT        Estimated Time: $ETC_HOURS h @ $TIMEOUT sec intervals"
+	else
+		echo "Page Count: $PAGE_COUNT        Estimated Time: $ETC_MIN min @ $TIMEOUT sec intervals"
+	fi
+}
+
+# prints the values of the arguments sent to the program
+function print_vars {
+	echo "TIMEOUT: $TIMEOUT"
+	echo "SCROLL_MODE: $SCROLL_MODE"
+	echo "FILE: $FILE"
+	echo "DO_CLOSE: $DO_CLOSE"
+	echo "IS_VERBOSE: $IS_VERBOSE"
+}
+
+# prints the usage string explaining how to use the program
+function print_usage {
+	USAGE="Incorrect parameters. Consult the documentation."
+	echo "$USAGE"
+	exit $1
+}
+
+###### The main portion of the program begins here ######
+
+# get the parameters
+while getopts ":r::t::s::c:e:v:h" options; do
+  case $options in
+    r ) VIEWER="$OPTARG";;
+    t ) TIMEOUT="$OPTARG";;
+    s ) SCROLL_MODE="$OPTARG";;
+    c ) pageCount; speedPagingTime; exit 0;;
+    e ) DO_CLOSE=1;;
+    v ) IS_VERBOSE=1;;
+    h ) print_usage 0;;
+#    \? ) print_usage 1;;
+    * ) print_usage 1;;
+  esac
+done
+eval FILE="\$$#"
+
+# choose a file to speedpage if one not passed
+if [ "$FILE" = "$0" ]
+then
+	cd $HOME
+	FILE=$(zenity --file-selection)
+
+	# check validity
+	if [ "$FILE" = '' ]
+	then
+		echo "Invalid filename."
+		exit 0;
+	fi
+fi
+
+# for debugging purposes only
+#print_vars
+#exit 0
+
+# load book
+openBook "$FILE"
+sleep $TIMEOUT
+
+# calculate pagecount
+pageCount
+
+# calculate speedpaging time 
+speedPagingTime
+
+# begin speedpaging
+for i in `seq 2 $PAGE_COUNT` # note: equivalent of 1 to PAGE_COUNT-1
+do
+	turnPageForward
+	sleep $TIMEOUT
+done
+
+# close book
+if [ $DO_CLOSE -eq 1 ]
+then
+	closeBook
+fi

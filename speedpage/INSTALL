@@ -1,0 +1,8 @@
+Installation Howto
+-------------------
+
+Installing speedpage is simple.
+1) Put the hidden .speedpage file in your home directory.
+2) Put the speedpage program somewhere on your computer
+   such that it is in your PATH variable.
+   (for example: /usr/bin)

@@ -1,0 +1,12 @@
+# Choose your scrolling mode, you can either choose to
+# scroll an entire page at a time or a screen at a time
+SCROLL_MODE='page'
+
+# Choose your pdf viewer.  The viewer must be in your path
+# otherwise you must give the absolute path to the
+# executable.  If you do not do this the loading of the
+# book will fail
+VIEWER='evince'
+
+# Choose the timeout interval when turning between pages (in seconds)
+TIMEOUT=5
