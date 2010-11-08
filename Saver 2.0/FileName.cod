@@ -1,0 +1,14 @@
+Get_FileName_Only Code                                           Here's an example on how to save source code with this program for the program to work properly.  Now try the "Compile To Bas" option under the file menu.           Public Function get_filename_only(filepath)
+'Stewart Macfarlane is the author of this code
+'This came from Planet Source Code
+'This code extracts the filename from a path
+    For X = Len(filepath) To 1 Step -1
+        If Mid(filepath, X, 1) = "\" Then
+            get_filename_only = Right(filepath, Len(filepath) - X)
+            Exit Function
+        End If
+    Next X
+    get_filename_only = "Please check filepath it may be incorrect)"
+End Function
+
+

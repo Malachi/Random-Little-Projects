@@ -1,0 +1,31 @@
+//////  //////   /////////   ///////   ////////   //////// 
+/     ///    /   /       /     ///         ///    ///
+/   /  ///   /   /  ///  /     ///        ///     //////
+/   //  //   /   /  ///  /     ///       ///      //////
+/   / /      /   /       /     ///      ///       ///
+/////  ///////   /////////   ///////   ////////   ////////
+
+Information:
+Saver 1.0 is a Noize Production.  Noize is a small group of windows programmers.  The particular AOL programmer that made this program is called "Alwee".  Any questions about this software email Progpro99@aol.com.  If you need direct assistance, reach Alwee ICQ 54734018.
+
+Saver Beta:
+Saver 1.0's beta wasn't even called Saver.  The beta was called VB Coder.  I decided to take a whole new direction with the 1.0 version.  VB Coder/Saver was changed a whole lot.
+
+Saver 1.0:
+This is Saver 1.0, this version has come a long way.  This program should have no program working on any type of Windows operateing system.  Just Install Saver 1.0 by useing the zip file.  The features of Saver 1.0 that the beta lacked:
+
+1.A better way of saveing and opening codes
+2.A better hands on feel because of the listboxes allowing users to sort through there codeing.
+3.An example code(To teach you how to save codes with Saver 1.0)
+4.Minimize to the systems tray
+5.The BIG FEATURE, being able to convert your selected source code into a bas.  Instant bas, no strings attached.
+6.Better protection from hackers by hideing your files
+
+Comments:
+Saver 2.0 will probably be the last version.  That is if a Saver 2.0 is needed.  All comments go to Progpro99@aol.com.  Please do not forget to rate my source code at http://www.planet-source-code.com/vb.
+
+The purpose of Saver by: Alwee was to save all the loose snipplets on your computer.  Then you will have an organized library of codes.  Later on you can go back and turn all those loose code snipplets into a bas.  It's like recycling old codeing instead of letting it go to waste.  Saver 1.0 was made ONLY for VB SNIPPLETS.  Any C++, perl, html ect. snipplets are not compatible for use with this program.
+
+
+
+						            Thank You!
